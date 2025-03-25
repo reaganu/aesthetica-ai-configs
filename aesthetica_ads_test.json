@@ -1,0 +1,31 @@
+{
+  "agent": "Aesthetica Ads",
+  "version": "2.0.1",
+  "domain": "Growth",
+  "input_schema": {
+    "audience_data": {
+      "type": "array",
+      "required": true
+    },
+    "budget_constraints": {
+      "type": "object",
+      "fields": ["max_cpc", "daily_cap"]
+    }
+  },
+  "output_schema": {
+    "ad_variants": {
+      "type": "array",
+      "min_items": 3
+    },
+    "roi_simulation": {
+      "type": "object"
+    }
+  },
+  "monitoring": {
+    "sla": {
+      "latency": "2s",
+      "error_rate": "<1%"
+    }
+  }
+}
+
