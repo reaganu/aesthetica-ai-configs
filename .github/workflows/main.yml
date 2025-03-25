@@ -1,0 +1,31 @@
+name: Validate Aesthetica Config Files
+
+on:
+  push:
+    paths:
+      - '**/*.json'
+      - '**/*.yml'
+  workflow_dispatch: # allows you to run it manually
+
+jobs:
+  validate-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Validate JSON
+        run: |
+          echo "Checking JSON files..."
+          for file in $(find . -name '*.json'); do
+            jq . "$file" > /dev/null || { echo "❌ Invalid JSON: $file"; exit 1; }
+          done
+          echo "✅ All JSON files valid."
+
+      - name: Validate YAML
+        run: |
+          echo "Checking YAML files..."
+          for file in $(find . -name '*.yml'); do
+            yamllint "$file" || { echo "❌ YAML error in $file"; exit 1; }
+          done
+          echo "✅ All YAML files valid."
