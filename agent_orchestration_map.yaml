@@ -1,0 +1,19 @@
+
+version: "2.1"
+architecture:
+  brain_node:
+    type: hybrid_router
+    config:
+      decision_window: 500ms
+      load_balancing: intelligent
+      subgraphs:
+        growth_engine:
+          type: modular
+          scaling: horizontal
+          agents:
+            - ads_processor:
+                resources: 
+                  gpu: 1
+                  memory: 4GB
+            - funnel_optimizer:
+                depends_on: ["ads_processor"]
