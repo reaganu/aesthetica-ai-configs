@@ -1,19 +1,33 @@
+name: Validate Aesthetica Configs
 
-version: "2.1"
-architecture:
-  brain_node:
-    type: hybrid_router
-    config:
-      decision_window: 500ms
-      load_balancing: intelligent
-      subgraphs:
-        growth_engine:
-          type: modular
-          scaling: horizontal
-          agents:
-            - ads_processor:
-                resources: 
-                  gpu: 1
-                  memory: 4GB
-            - funnel_optimizer:
-                depends_on: ["ads_processor"]
+on:
+  push:
+    paths:
+      - 'aesthetica_config_v2.json'
+      - 'agent_orchestration_map.yaml'
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Validate JSON structure
+        run: |
+          python3 -m json.tool aesthetica_config_v2.json > /dev/null
+        continue-on-error: false
+
+  validate-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate YAML structure
+        run: |
+          python3 -c "import yaml, sys; yaml.safe_load(open('agent_orchestration_map.yaml'))"
+        continue-on-error: false
