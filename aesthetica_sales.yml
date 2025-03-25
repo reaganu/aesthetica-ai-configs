@@ -1,0 +1,23 @@
+agent_name: Aesthetica Sales
+description: >
+  An AI sales assistant that qualifies leads, handles objections, and closes deals using ethical, adaptive sales techniques.
+
+phase: Deliver
+capabilities:
+  - lead_qualification
+  - objection_handling
+  - product_pitch
+  - demo_scheduling
+output_format: JSON
+handoff:
+  escalate_to: Aesthetica Brain
+  downstream_agents:
+    - Aesthetica Email
+    - Aesthetica CRM Sync
+trigger_conditions:
+  - task_type == "sales_inquiry"
+  - user_intent in ["demo", "pricing", "buy"]
+security:
+  allow_sensitive_data: false
+  log_interactions: true
+confidence_threshold: 0.85

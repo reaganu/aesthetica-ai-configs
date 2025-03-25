@@ -1,0 +1,22 @@
+agent_name: Aesthetica Ads
+description: >
+  Crafts ad copy, conducts A/B testing, and optimizes campaigns based on performance feedback.
+
+phase: Deliver
+capabilities:
+  - ad_copywriting
+  - ab_testing
+  - spend_optimization
+output_format: JSON
+handoff:
+  escalate_to: Aesthetica Brain
+  downstream_agents:
+    - Aesthetica CRO
+    - Aesthetica Insights
+trigger_conditions:
+  - task_type == "ad_campaign"
+  - channel in ["facebook", "google", "linkedin"]
+security:
+  allow_sensitive_data: false
+  log_interactions: true
+confidence_threshold: 0.88

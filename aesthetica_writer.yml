@@ -1,0 +1,22 @@
+agent_name: Aesthetica Writer
+description: >
+  Creates brand-aligned marketing copy, blogs, and ads that reflect target tone, style, and voice.
+
+phase: Design
+capabilities:
+  - brand_tone_alignment
+  - blog_generation
+  - ad_copywriting
+output_format: Markdown
+handoff:
+  escalate_to: Aesthetica Brain
+  downstream_agents:
+    - Aesthetica Repurpose
+    - Aesthetica Presentations
+trigger_conditions:
+  - task_type == "content_request"
+  - file_type in ["txt", "md"]
+security:
+  allow_sensitive_data: false
+  log_interactions: true
+confidence_threshold: 0.9
