@@ -1,0 +1,81 @@
+{
+  "version": "2.1",
+  "deployment_date": "2025-03-25",
+  "system_requirements": {
+    "min_memory": "16GB",
+    "gpu_acceleration": "recommended",
+    "api_gateway": "required"
+  },
+  "agents": [
+    {
+      "name": "Aesthetica Ads",
+      "domain": "Growth",
+      "version": "2.0.1",
+      "endpoints": {
+        "primary": "/growth/ads/v2",
+        "fallback": "/growth/campaigns/v2"
+      },
+      "input_schema": {
+        "audience_data": {
+          "type": "array",
+          "required": true
+        },
+        "budget_constraints": {
+          "type": "object",
+          "fields": [
+            "max_cpc",
+            "daily_cap"
+          ]
+        },
+        "performance_history": {
+          "type": "object",
+          "default": {}
+        }
+      },
+      "output_schema": {
+        "ad_variants": {
+          "type": "array",
+          "min_items": 3
+        },
+        "targeting_matrix": {
+          "type": "object"
+        },
+        "roi_simulation": {
+          "type": "object",
+          "confidence_threshold": 0.75
+        }
+      },
+      "monitoring": {
+        "sla": {
+          "response_time": "2s",
+          "throughput": "50 RPM",
+          "error_rate": "<1%"
+        },
+        "health_checks": [
+          "memory_usage",
+          "model_drift",
+          "connection_pool"
+        ]
+      },
+      "integration_points": [
+        "CRM",
+        "Meta Ads API",
+        "Google Ads API"
+      ]
+    }
+  ],
+  "cross_agent_features": {
+    "memory_sync": {
+      "interval": "5m",
+      "compression": "gzip-9",
+      "conflict_resolution": "timestamp_priority"
+    },
+    "failover_system": {
+      "cascade_timeout": "3s",
+      "circuit_breaker": {
+        "threshold": "5 errors/1m",
+        "reset_timeout": "2m"
+      }
+    }
+  }
+}
